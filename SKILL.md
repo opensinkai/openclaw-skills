@@ -107,14 +107,22 @@ scripts/activity.sh list --type message
 
 ### When to log
 
-Log when the agent:
-- Completes a task
-- Makes a decision
-- Encounters something notable
-- Produces output
-- Interacts with external services
+Think of activities as a **captain's log** — milestones, not a transcript. If someone asks "what did the agent do today?", your activities should tell the full story without the noise.
 
-Don't log routine operations (reading files, internal reasoning). Activities are **high-level, meaningful events**.
+**Log these:**
+- Task completed ("Generated weekly report for Q1")
+- External interactions ("Sent deployment notification to Slack")
+- Decisions made ("Escalated ticket #42 to engineering")
+- Errors and recoveries ("API rate limited, retried 3x, succeeded")
+- State changes ("Order #456 moved to shipped")
+
+**Skip these:**
+- Every chat message or reply
+- File reads and internal reasoning
+- Routine tool calls (reading files, searching)
+- Intermediate steps that don't matter on their own
+
+**Rule of thumb:** If you'd mention it in a daily standup, log it. If not, skip it.
 
 ---
 
