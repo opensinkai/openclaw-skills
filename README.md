@@ -6,10 +6,13 @@ An [OpenClaw](https://github.com/openclaw/openclaw) skill pack with [OpenSink](h
 
 ## What's included
 
+### 🔄 Session Manager
+Create and manage OpenSink sessions. Start a session when beginning a task, log activities during, and mark it complete when done.
+
 ### 📋 Activity Logger
 Log significant agent actions to OpenSink as Activities. Creates an inspectable timeline visible in the dashboard — audit trails, observability, and debugging without parsing logs.
 
-*More integrations coming soon: Input Requests, Knowledge Base, Session Sync.*
+*More integrations coming soon: Input Requests, Knowledge Base.*
 
 ## Install
 
@@ -42,28 +45,54 @@ OpenClaw picks up the skill automatically on the next session.
 ## Setup
 
 1. **Get an OpenSink API key** at [app.opensink.com](https://app.opensink.com)
-2. **Set environment variables** (varies by tool — see SKILL.md for details):
+2. **Set environment variables:**
    ```bash
    export OPENSINK_API_KEY="your-api-key"
-   export OPENSINK_AGENT_ID="your-agent-id"      # for activity logger
-   export OPENSINK_SESSION_ID="your-session-id"   # for activity logger
+   export OPENSINK_AGENT_ID="your-agent-id"
    ```
 
 ## Usage
 
-### Activity Logger
+### Typical workflow
+
+```bash
+# 1. Start a session
+SESSION_ID=$(bash scripts/session.sh start)
+export OPENSINK_SESSION_ID=$SESSION_ID
+
+# 2. Log activities as you work
+bash scripts/activity.sh log "Processed 12 emails" "message"
+bash scripts/activity.sh log "Report complete" "message" '{"count": 12}'
+
+# 3. Complete the session
+bash scripts/session.sh status $SESSION_ID completed
+```
+
+### Session management
+
+```bash
+# Start a new session (returns session ID)
+bash scripts/session.sh start
+
+# Update session status
+bash scripts/session.sh status SESSION_ID completed
+bash scripts/session.sh status SESSION_ID failed
+
+# Get session details
+bash scripts/session.sh get SESSION_ID
+```
+
+### Activity logging
 
 ```bash
 # Log an activity
 bash scripts/activity.sh log "Processed 12 emails" "message"
 
 # Log with structured payload
-bash scripts/activity.sh log "Daily report complete" "message" '{"count": 12}'
+bash scripts/activity.sh log "Daily report" "message" '{"count": 12}'
 
 # List recent activities
 bash scripts/activity.sh list
-
-# Filter by session or type
 bash scripts/activity.sh list --session SESSION_ID
 bash scripts/activity.sh list --type message
 ```
