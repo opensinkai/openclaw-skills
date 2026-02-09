@@ -31,7 +31,7 @@ shift
 
 case "$cmd" in
   start)
-    state="${1:-\{\}}"
+    state="${1:-{}}"
 
     body=$(cat <<EOF
 {
