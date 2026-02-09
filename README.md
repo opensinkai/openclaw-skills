@@ -6,6 +6,9 @@ An [OpenClaw](https://github.com/openclaw/openclaw) skill pack with [OpenSink](h
 
 ## What's included
 
+### 🤖 Agent Manager
+Create and manage OpenSink agents. No need to pre-configure an agent ID — the skill can create one for you by name.
+
 ### 🔄 Session Manager
 Create and manage OpenSink sessions. Start a session when beginning a task, log activities during, and mark it complete when done.
 
@@ -45,10 +48,9 @@ OpenClaw picks up the skill automatically on the next session.
 ## Setup
 
 1. **Get an OpenSink API key** at [app.opensink.com](https://app.opensink.com)
-2. **Set environment variables:**
+2. **Set your API key:**
    ```bash
    export OPENSINK_API_KEY="your-api-key"
-   export OPENSINK_AGENT_ID="your-agent-id"
    ```
 
 ## Usage
@@ -56,15 +58,19 @@ OpenClaw picks up the skill automatically on the next session.
 ### Typical workflow
 
 ```bash
-# 1. Start a session
+# 1. Create an agent (first time only)
+AGENT_ID=$(bash scripts/agent.sh create "Mars" "My OpenClaw agent")
+export OPENSINK_AGENT_ID=$AGENT_ID
+
+# 2. Start a session
 SESSION_ID=$(bash scripts/session.sh start)
 export OPENSINK_SESSION_ID=$SESSION_ID
 
-# 2. Log activities as you work
+# 3. Log activities as you work
 bash scripts/activity.sh log "Processed 12 emails" "message"
 bash scripts/activity.sh log "Report complete" "message" '{"count": 12}'
 
-# 3. Complete the session
+# 4. Complete the session
 bash scripts/session.sh status $SESSION_ID completed
 ```
 

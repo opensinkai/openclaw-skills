@@ -2,7 +2,7 @@
 name: opensink-skills
 displayName: OpenSink Skills
 description: OpenSink integration tools for OpenClaw agents. Includes session management and activity logging for audit trails and observability, with more integrations coming. Use when the agent needs to log actions, track progress, or interact with OpenSink's agent platform.
-metadata: {"openclaw":{"emoji":"⚡","requires":{"bins":["curl"],"env":["OPENSINK_API_KEY","OPENSINK_AGENT_ID"]}}}
+metadata: {"openclaw":{"emoji":"⚡","requires":{"bins":["curl"],"env":["OPENSINK_API_KEY"]}}}
 ---
 
 # OpenSink Skills
@@ -13,7 +13,33 @@ A collection of OpenSink integrations for OpenClaw agents. One install, multiple
 
 Requires:
 - `OPENSINK_API_KEY` — API key from [app.opensink.com](https://app.opensink.com)
-- `OPENSINK_AGENT_ID` — your agent's ID in OpenSink
+- `OPENSINK_AGENT_ID` — your agent's ID in OpenSink (create one with `agent.sh` or use an existing one)
+
+---
+
+## Agent Manager
+
+Create and manage OpenSink agents. If `OPENSINK_AGENT_ID` is not set, create an agent first.
+
+### Create an agent
+
+```bash
+# Returns the agent ID — set it as OPENSINK_AGENT_ID
+AGENT_ID=$(scripts/agent.sh create "My Agent" "Description of what it does")
+export OPENSINK_AGENT_ID=$AGENT_ID
+```
+
+### List existing agents
+
+```bash
+scripts/agent.sh list
+```
+
+### Get agent details
+
+```bash
+scripts/agent.sh get $AGENT_ID
+```
 
 ---
 
@@ -94,10 +120,11 @@ Don't log routine operations (reading files, internal reasoning). Activities are
 
 ## Typical workflow
 
-1. **Start a session** → `SESSION_ID=$(scripts/session.sh start)`
-2. **Set the session ID** → `export OPENSINK_SESSION_ID=$SESSION_ID`
-3. **Log activities as you work** → `scripts/activity.sh log "..." "message"`
-4. **Complete the session** → `scripts/session.sh status $SESSION_ID completed`
+1. **Create or set agent** → `export OPENSINK_AGENT_ID=$(scripts/agent.sh create "Mars")` (or use an existing ID)
+2. **Start a session** → `SESSION_ID=$(scripts/session.sh start)`
+3. **Set the session ID** → `export OPENSINK_SESSION_ID=$SESSION_ID`
+4. **Log activities as you work** → `scripts/activity.sh log "..." "message"`
+5. **Complete the session** → `scripts/session.sh status $SESSION_ID completed`
 
 ---
 
