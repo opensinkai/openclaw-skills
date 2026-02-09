@@ -2,7 +2,7 @@
 
 An [OpenClaw](https://github.com/openclaw/openclaw) skill pack with [OpenSink](https://opensink.com) integrations for AI agents.
 
-> **Looking for agent memory?** See [opensink-openclaw-memory](https://github.com/opensinkai/opensink-openclaw-memory) — a dedicated skill for persistent, searchable agent memory.
+> **Looking for agent memory?** See [opensink-openclaw-memory](https://github.com/opensinkai/openclaw-memory) — a dedicated skill for persistent, searchable agent memory.
 
 ## What's included
 
@@ -25,22 +25,16 @@ Log significant agent actions to OpenSink as Activities. Creates an inspectable 
 clawhub install opensink-skills
 ```
 
-### From GitHub
-
-```bash
-openclaw skills install github:opensinkai/opensink-openclaw-skills
-```
-
 ### Manual (direct installation)
 
 ```bash
-git clone https://github.com/opensinkai/opensink-openclaw-skills.git
+git clone https://github.com/opensinkai/openclaw-skills.git
 
 # Per-agent (workspace only):
-cp -r opensink-openclaw-skills <workspace>/skills/opensink-skills
+cp -r openclaw-skills <workspace>/skills/opensink-skills
 
 # Or global (all agents):
-cp -r opensink-openclaw-skills ~/.openclaw/skills/opensink-skills
+cp -r openclaw-skills ~/.openclaw/skills/opensink-skills
 ```
 
 OpenClaw picks up the skill automatically on the next session.
